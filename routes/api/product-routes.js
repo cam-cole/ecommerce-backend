@@ -15,18 +15,6 @@ router.get('/', (req, res) => {
       'stock',
       'category_id'
     ],
-    include: [
-      {
-        model: Category,
-        attributes: ['category_name'],
-      },
-      {
-        model: Tag,
-        attributes: ['tag_name'],
-        through: ProductTag,
-        as: 'tag'
-      }
-    ]
   })
   .then(dbProductData => res.json(dbProductData))
   .catch(err => {
@@ -42,17 +30,7 @@ router.get('/:id', (req, res) => {
   Product.findOne({
     where: {
       id: req.params.id
-    },
-    include: [
-      {
-        model: Category,
-        attributes: ['id', 'category_name']
-      },
-      {
-        model: Tag,
-        attributes: ['id', 'tag_name']
-      },
-    ]
+    }
   })
   .then(dbProductData => {
     if (!dbProductData) {
